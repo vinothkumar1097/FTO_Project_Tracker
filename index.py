@@ -28,13 +28,6 @@ image_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACgCAMAAACBpqFQA
 
 # colors for stages
 co = {
-        # "completed": "#17A05D",
-        # "development": "#FF7700",
-        # "yet to start": "#4A8AF4",
-        # "study":"#FBD45A",
-        # "deployed": "#FC0000",
-        # "uat":"#FFCD42",
-        # "no status":"#1B100C"
         "completed": "#70AD47",
         "development": "#8EA9DB",
         "yet to start": "#A5A5A5",
@@ -252,13 +245,16 @@ def parse_contents(contents, filename):
     except Exception as e:
         print(e)
         return None
-
+        
     df1 = df1.drop_duplicates()
-    df1['GBU'].fillna('Unknown', inplace=True)
-    df1['Scrum Master'].fillna('Unknown', inplace=True)
-    df1['Status'].fillna('No Status', inplace=True)
-    df1['Developer Name'].fillna('No Developer', inplace=True)
-    return df1
+    try:
+        df1['GBU'].fillna('Unknown', inplace=True)
+        df1['Scrum Master'].fillna('Unknown', inplace=True)
+        df1['Status'].fillna('No Status', inplace=True)
+        df1['Developer Name'].fillna('No Developer', inplace=True)
+        return df1
+    except:
+        return df1
 
 def dataset(i, dfs):
     datas = []
@@ -314,49 +310,6 @@ def update_output(contents, filename, gbu, scrum, dev):
             return [{}]
     else:
         return [{}]
-
-# @app.callback(Output('dd1', 'options'),
-#               [Input('table', 'rows'),
-#                Input('upload-data', 'contents')])
-# def update_dropdown1(tablerows, contents):
-#     if contents is not None:
-#         dff1 = pd.DataFrame(tablerows)
-#         if 'GBU' in dff1.columns:
-#             options1 = [{'label': tic, 'value': tic} for tic in dff1['GBU'].unique()]
-#             return options1
-#         else:
-#             return []
-#     else:
-#         return []
-#
-#
-# @app.callback(Output('dd2', 'options'),
-#               [Input('table', 'rows'),
-#                Input('upload-data', 'contents')])
-# def update_dropdown2(tablerows, contents):
-#     if contents is not None:
-#         dff1 = pd.DataFrame(tablerows)
-#         if 'Scrum Master' in dff1.columns:
-#             options2 = [{'label': tic, 'value': tic} for tic in dff1['Scrum Master'].unique()]
-#             return options2
-#         else:
-#             return []
-#     else:
-#         return []
-#
-# @app.callback(Output('dd3', 'options'),
-#               [Input('table', 'rows'),
-#                Input('upload-data', 'contents')])
-# def update_dropdown3(tablerows, contents):
-#     if contents is not None:
-#         dff1 = pd.DataFrame(tablerows)
-#         if 'Developer Name' in dff1.columns:
-#             options3 = [{'label': tic, 'value': tic} for tic in dff1['Developer Name'].unique()]
-#             return options3
-#         else:
-#             return []
-#     else:
-#         return []
 
 @app.callback(Output('dd1', 'options'),
               [Input('upload-data', 'contents'),  Input('upload-data', 'filename')])
